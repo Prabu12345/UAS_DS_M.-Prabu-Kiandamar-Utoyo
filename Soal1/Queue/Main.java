@@ -2,7 +2,6 @@ import java.util.*;
 
 public class Main {
     public static String nowPerfomer = "Rina";
-    public static String peserta[] = {"Toru", "Prabu", "Sakura", "Tama", "Yuki", "Rara", "Kira", "Airi"};
     public static ArrayQueue queue = new ArrayQueue(5);
 
     public static void main(String[] args)

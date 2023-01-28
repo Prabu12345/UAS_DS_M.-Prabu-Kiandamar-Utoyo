@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class ArraySearch {
+public class Main {
     // Linear search function (iterative) untuk data pada posisi ganjil
     public static int linearSearchOdd(String[] arr, String target) {
         for (int i = 1; i < arr.length; i += 2) {

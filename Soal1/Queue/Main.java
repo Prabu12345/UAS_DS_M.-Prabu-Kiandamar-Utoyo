@@ -9,12 +9,6 @@ public class Main {
     {
         Scanner userInput = new Scanner(System.in);
 
-        if (queue.getSize() < 1) {
-            for (int i = 0; i < peserta.length; i++) {
-                queue.enqueue(peserta[i]);
-            }
-        }
-
         System.out.println("--------{{ Music Idol Audition Queue Menu }}----------");
         System.out.println("Selamat datang di Music Idol Audition Queue Menu, Pilih printah menu di bawah.");
         System.out.println("1. Now Performer\n2. Add Perfomer to Queue\n3. Shift Perfomer from Queue\n4. See All Perfomer on Queue");
@@ -41,7 +35,18 @@ public class Main {
     }
 
     public static void shift() {
-        System.out.println(queue.dequeue() + " Sekarang yang melakukan perfoming...\nPerformer selanjutnya ialah " + queue.peekFront() + ".");
+        String nextPerfomer = queue.dequeue();
+        String getFrontQueue = queue.peekFront();
+        if (nextPerfomer == null && getFrontQueue == null) {
+            System.out.println("Waduh..., maaf queue kosong.");
+            back();
+            return;
+        }
+        if (getFrontQueue == null) {
+            System.out.println(nextPerfomer + " Sekarang yang melakukan perfoming...");
+        } else {
+            System.out.println(nextPerfomer + " Sekarang yang melakukan perfoming...\nPerformer selanjutnya ialah " + getFrontQueue + ".");
+        }
         back();
     }
     
@@ -60,7 +65,13 @@ public class Main {
     }
 
     public static void list() {
-        String perfomerer[] = queue.getQueue();
+        String getq[] = queue.getQueue();
+        if (getq == null) {
+            System.out.println("Waduh..., maaf queue kosong.");
+            back();
+            return;
+        }
+        String perfomerer[] = getq;
         System.out.println("Berikut List Queue:");
         for (int i = 0; i < perfomerer.length; i++) {
           System.out.println((i+1) + ". " + perfomerer[i]);
@@ -146,6 +157,7 @@ class ArrayQueue {
         if (front == rear) {
             return null;
         }
+        System.out.println(front + "  " + rear);
         String[] temp = new String[rear-front];
         int j = 0;
         for (int i = front; i < rear; i++) {

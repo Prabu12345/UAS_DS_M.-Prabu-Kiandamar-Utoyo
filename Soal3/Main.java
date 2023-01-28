@@ -124,24 +124,21 @@ class BinaryTree {
 public class Main {
     public static void main(String[] args) {
         BinaryTree tree = new BinaryTree();
-    
-        tree.insert(50);
-        tree.insert(30);
-        tree.insert(20);
-        tree.insert(40);
-        tree.insert(70);
-        tree.insert(60);
-        tree.insert(80);
-    
-        System.out.println("Inorder traversal of the given tree");
+        
+        int angka[] = {1,7,4,2,3,6,2,1,6,3,4,32,46,34,2,32,1,23,64,23,43,31,23};
+        
+        for (int i = 0; i < angka.length; i++) {
+            tree.insert(angka[i]);
+        }
+        System.out.println("Traversal Inorder Output");
         tree.inorder();
-        System.out.println("\nPreorder traversal of the given tree");
+        System.out.println("\nTraversal Preorder Output");
         tree.preorder();
-        System.out.println("\nPostorder traversal of the given tree");
+        System.out.println("\nTraversal Postorder Output");
         tree.postorder();
     
         System.out.println("\nSize of the tree: " + tree.size());
-        System.out.println("\nMaximum value in the tree: " + tree.maxValue());
-        System.out.println("\nMinimum value in the tree: " + tree.minValue());
+        System.out.println("Maximum value in the tree: " + tree.maxValue());
+        System.out.println("Minimum value in the tree: " + tree.minValue());
     }
 }

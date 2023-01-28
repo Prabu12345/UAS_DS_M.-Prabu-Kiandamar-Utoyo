@@ -9,9 +9,9 @@ public class Main {
     {
         Scanner userInput = new Scanner(System.in);
 
-        if (queue.size() < 1) {
+        if (queue.getSize() < 1) {
             for (int i = 0; i < peserta.length; i++) {
-                queue.add(peserta[i]);
+                queue.enqueue(peserta[i]);
             }
         }
 
@@ -41,7 +41,7 @@ public class Main {
     }
 
     public static void shift() {
-        System.out.println(queue.remove() + " Sekarang yang melakukan perfoming...\nPerformer selanjutnya ialah " + queue.peek() + ".");
+        System.out.println(queue.dequeue() + " Sekarang yang melakukan perfoming...\nPerformer selanjutnya ialah " + queue.peekFront() + ".");
         back();
     }
     
@@ -49,23 +49,21 @@ public class Main {
         System.out.print("Masukan Nama yang ingin di tambahkan : ");
         Scanner addInput = new Scanner(System.in);
         String toQueue = addInput.next();
-        queue.add(toQueue);
-        System.out.println(toQueue + " Di tanbahkan ke dalam Queue.");
+        queue.enqueue(toQueue);
+        System.out.println(toQueue + " Di tambahkan ke dalam Queue.");
         back();
     }
 
     public static void size() {
-        System.out.println("Terdapat " + queue.size() + " yang berada di Queue.");
+        System.out.println("Terdapat " + queue.getSize() + " yang berada di Queue.");
         back();
     }
 
     public static void list() {
-        Object perfomerer[] = queue.toArray();
+        String perfomerer[] = queue.getQueue();
         System.out.println("Berikut List Queue:");
-        int i = 1;
-        for (Object key : perfomerer) {
-            System.out.println(i + ". " + key);
-            i++;
+        for (int i = 0; i < perfomerer.length; i++) {
+          System.out.println((i+1) + ". " + perfomerer[i]);
         }
         back();
     }
@@ -86,89 +84,74 @@ public class Main {
     }
 }
 
-public class ArrayQueue {
-    private int[] queue;
-    private int front, rear, size;
+class ArrayQueue {
+    public String[] queue;
+    private int front;
+    private int rear;
+    private int size;
 
-    // Konstruktor
-    public ArrayQueue(int capacity) {
-        queue = new int[capacity];
-        front = rear = 0;
-        size = 0;
+    public ArrayQueue(int size) {
+        queue = new String[size];
+        front = 0;
+        rear = 0;
+        this.size = size;
     }
 
-    // Menambahkan elemen ke queue
-    public void enqueue(int data) {
-        if (front == -1) {
-            front = 0;
-            rear = 0;
-            arr[rear] = x;
-        } else if (rear + 1 >= arr.length) {
-            System.out.println("Queue penuh");
-        } else if (rear + 1 < arr.length) {
-            rear++;
-            arr[rear] = x;
+    public void enqueue(String data) {
+        if (rear == size) {
+            this.size++;
+            queue = Arrays.copyOf(queue, size);
         }
-        size++;
+        queue[rear] = data;
+        rear++;
     }
 
-    // Menghapus elemen paling depan dari queue
-    public int dequeue() {
-        if (front == -1) {
-            System.out.println("Queue kosong");
-        } else {
-            front++;
-            if (front > rear) {
-                front = -1;
-                rear = -1;
-            }
+    public String dequeue() {
+        if (front == rear) {
+            return null;
         }
-        size--;
+        String data = queue[front];
+        front++;
+        return data;
     }
 
-    // Menampilkan elemen paling depan dari queue
-    public int peekFront() {
-        if (size == 0) {
-            System.out.println("Queue kosong");
-            return -1;
+    public String peekFront() {
+        if (front == rear) {
+            return null;
         }
         return queue[front];
     }
-    // Menampilkan elemen paling belakang dari queue
-    public int peekRear() {
-        if (size == 0) {
-            System.out.println("Queue kosong");
-            return -1;
+
+    public String peekRear() {
+        if (front == rear) {
+            return null;
         }
-        return queue[(rear - 1 + queue.length) % queue.length];
+        return queue[rear-1];
     }
-
-    // Mengecek apakah queue kosong
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
-    // Mengecek apakah queue penuh
-    public boolean isFull() {
-        return size == queue.length;
-    }
-
-    // Menampilkan jumlah elemen dalam queue
-    public int getSize() {
-        return size;
-    }
-    
-    // Menampilkan elemen dalam queue
     public void printQueue() {
-        if (size == 0) {
-            System.out.println("Queue kosong");
+        if (front == rear) {
             return;
         }
-        int i = front;
-        while (i != rear) {
+        for (int i = front; i < rear; i++) {
             System.out.print(queue[i] + " ");
-            i = (i + 1) % queue.length;
         }
         System.out.println();
+    }
+    
+    public int getSize() {
+        return rear-front;
+    }
+    
+    public String[] getQueue() {
+        if (front == rear) {
+            return null;
+        }
+        String[] temp = new String[rear-front];
+        int j = 0;
+        for (int i = front; i < rear; i++) {
+            temp[j] = queue[i];
+            j++;
+        }
+        return temp;
     }
 }
